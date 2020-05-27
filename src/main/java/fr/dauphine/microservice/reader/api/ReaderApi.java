@@ -18,6 +18,7 @@ import java.util.Optional;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping("/readers")
@@ -38,7 +39,7 @@ public class ReaderApi {
         Optional<Reader> readerOptional = readerServiceProvider.getById(id);
         Reader reader = readerOptional.orElse(new Reader());
         Link link = getLink(id);
-        return new ResponseEntity<>(EntityModel.of(reader, link), CREATED);
+        return new ResponseEntity<>(EntityModel.of(reader, link), OK);
     }
 
     private Link getLink(Integer id) {
