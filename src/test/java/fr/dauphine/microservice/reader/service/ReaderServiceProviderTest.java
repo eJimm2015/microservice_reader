@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import static org.junit.Assert.assertEquals;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.mockito.Mockito.when;
@@ -35,6 +36,14 @@ public class ReaderServiceProviderTest {
         int id = 12345;
         Reader reader = new Reader().setId(id);
         when(readerRepository.findById(id)).thenReturn(Optional.of(reader));
-        assertEquals(Optional.of(reader), readerServiceProvider.getById(id));
+        assertEquals(reader, readerServiceProvider.getById(id));
     }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testGetByUknownId() {
+        int id = 12345;
+        when(readerRepository.findById(id)).thenReturn(Optional.empty());
+        readerServiceProvider.getById(id);
+    }
+
 }

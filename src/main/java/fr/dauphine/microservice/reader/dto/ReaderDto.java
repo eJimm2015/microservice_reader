@@ -1,20 +1,15 @@
-package fr.dauphine.microservice.reader.model;
+package fr.dauphine.microservice.reader.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import fr.dauphine.microservice.reader.model.Gender;
+import fr.dauphine.microservice.reader.model.Reader;
+import org.springframework.hateoas.RepresentationModel;
+
 import javax.persistence.Id;
 import java.util.Date;
 import java.util.Objects;
 
-import net.bytebuddy.dynamic.loading.InjectionClassLoader;
-import org.springframework.hateoas.RepresentationModel;
+public class ReaderDto extends RepresentationModel<ReaderDto> {
 
-@Entity
-public class Reader {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private Gender gender;
@@ -28,7 +23,7 @@ public class Reader {
         return id;
     }
 
-    public Reader setId(Integer id) {
+    public ReaderDto setId(Integer id) {
         this.id = id;
         return this;
     }
@@ -37,7 +32,7 @@ public class Reader {
         return gender;
     }
 
-    public Reader setGender(Gender gender) {
+    public ReaderDto setGender(Gender gender) {
         this.gender = gender;
         return this;
     }
@@ -46,7 +41,7 @@ public class Reader {
         return familyName;
     }
 
-    public Reader setFamilyName(String familyName) {
+    public ReaderDto setFamilyName(String familyName) {
         this.familyName = familyName;
         return this;
     }
@@ -55,7 +50,7 @@ public class Reader {
         return firstName;
     }
 
-    public Reader setFirstName(String firstName) {
+    public ReaderDto setFirstName(String firstName) {
         this.firstName = firstName;
         return this;
     }
@@ -64,7 +59,7 @@ public class Reader {
         return birthDate;
     }
 
-    public Reader setBirthDate(Date birthDate) {
+    public ReaderDto setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
         return this;
     }
@@ -73,7 +68,7 @@ public class Reader {
         return address;
     }
 
-    public Reader setAddress(String address) {
+    public ReaderDto setAddress(String address) {
         this.address = address;
         return this;
     }
@@ -82,7 +77,7 @@ public class Reader {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Reader reader = (Reader) o;
+        ReaderDto reader = (ReaderDto) o;
         return id.equals(reader.id);
     }
 
@@ -90,5 +85,13 @@ public class Reader {
     public int hashCode() {
         return Objects.hash(id);
     }
-
+    public ReaderDto fill(Reader reader) {
+        this.id = reader.getId();
+        this.address = reader.getAddress();
+        this.birthDate = reader.getBirthDate();
+        this.familyName = reader.getFamilyName();
+        this.firstName = reader.getFirstName();
+        this.gender = reader.getGender();
+        return this;
+    }
 }
