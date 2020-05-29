@@ -1,24 +1,20 @@
 package fr.dauphine.microservice.reader.api;
 
+import fr.dauphine.microservice.reader.dto.ReaderDto;
 import fr.dauphine.microservice.reader.model.Reader;
 import fr.dauphine.microservice.reader.service.ReaderServiceProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Optional;
+import java.util.NoSuchElementException;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/readers")
@@ -28,18 +24,21 @@ public class ReaderApi {
     private ReaderServiceProvider readerServiceProvider;
 
     @PostMapping
-    public ResponseEntity<EntityModel<Reader>> create(@RequestBody Reader reader) {
+    public ResponseEntity<EntityModel<ReaderDto>> create(@RequestBody Reader reader) {
         Reader created = readerServiceProvider.create(reader);
         Link link = getLink(created.getId());
-        return new ResponseEntity<>(EntityModel.of(created, link), CREATED);
+        return new ResponseEntity<>(EntityModel.of(new ReaderDto().fill(created), link), CREATED);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<EntityModel<Reader>> getById(@PathVariable("id") Integer id) {
-        Optional<Reader> readerOptional = readerServiceProvider.getById(id);
-        Reader reader = readerOptional.orElse(new Reader());
-        Link link = getLink(id);
-        return new ResponseEntity<>(EntityModel.of(reader, link), OK);
+    public ResponseEntity<EntityModel<ReaderDto>> getById(@PathVariable("id") Integer id) {
+       try {
+           Reader reader = readerServiceProvider.getById(id);
+           Link link = getLink(id);
+           return new ResponseEntity<>(EntityModel.of(new ReaderDto().fill(reader), link), OK);
+       } catch (NoSuchElementException e) {
+           throw new ResponseStatusException(NOT_FOUND,e.getMessage());
+       }
     }
 
     private Link getLink(Integer id) {

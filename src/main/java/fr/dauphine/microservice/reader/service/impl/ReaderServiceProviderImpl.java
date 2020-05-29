@@ -5,6 +5,7 @@ import fr.dauphine.microservice.reader.service.ReaderServiceProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -19,7 +20,9 @@ public class ReaderServiceProviderImpl implements ReaderServiceProvider {
     }
 
     @Override
-    public Optional<Reader> getById(Integer id) {
-        return readerRepository.findById(id);
+    public Reader getById(Integer id) {
+        Optional<Reader> byId = readerRepository.findById(id);
+        if (byId.isPresent()) return byId.get();
+        throw new NoSuchElementException(String.format("Le lecteur n°%s n'existe pas",id));
     }
 }
