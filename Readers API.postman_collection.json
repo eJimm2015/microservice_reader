@@ -1,6 +1,5 @@
 {
 	"info": {
-		"_postman_id": "c4dceb4a-8555-47fa-a275-92aa0335e792",
 		"name": "Readers API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -11,7 +10,15 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": ""
+					"raw": "localhost:8002/api/healthcheck",
+					"host": [
+						"localhost"
+					],
+					"port": "8002",
+					"path": [
+						"api",
+						"healthcheck"
+					]
 				}
 			},
 			"response": []
@@ -23,7 +30,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\t\"id\": 0,\n\t\"gender\":\"M\",\n    \"familyname\":\"LE\" ,\n    \"firstname\":\"BIMO18\" ,\n    \"birthDate\":null,\n    \"address\":null                \n\t\n}",
+					"raw": "{\t\"id\": 0,\n\t\"gender\":\"M\",\n    \"familyName\":\"LE\" ,\n    \"firstName\":\"BIMO18\" ,\n    \"birthDate\":null,\n    \"address\":null                \n\t\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -50,7 +57,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8002/api/readers/3",
+					"raw": "localhost:8002/api/readers/4",
 					"host": [
 						"localhost"
 					],
@@ -58,7 +65,7 @@
 					"path": [
 						"api",
 						"readers",
-						"3"
+						"4"
 					]
 				}
 			},
@@ -66,15 +73,12 @@
 		},
 		{
 			"name": "Update Reader",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
-				"method": "GET",
+				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\t\"id\": 3,\n\t\"gender\":\"F\",\n    \"familyname\":\"Ferroudja\" ,\n    \"firstname\":\"BIMO18\" ,\n    \"birthDate\":null,\n    \"address\":null                \n\t\n}",
+					"raw": "{\t\"id\": 4,\n\t\"gender\":\"F\",\n    \"familyName\":\"Ferroudja\" ,\n    \"firstName\":\"BIMO18\" ,\n    \"birthDate\":null,\n    \"address\":null                \n\t\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -98,10 +102,19 @@
 		{
 			"name": "Delete Reader",
 			"request": {
-				"method": "GET",
+				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": ""
+					"raw": "localhost:8002/api/readers/4",
+					"host": [
+						"localhost"
+					],
+					"port": "8002",
+					"path": [
+						"api",
+						"readers",
+						"4"
+					]
 				}
 			},
 			"response": []
