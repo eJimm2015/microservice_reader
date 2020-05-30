@@ -1,0 +1,111 @@
+{
+	"info": {
+		"_postman_id": "c4dceb4a-8555-47fa-a275-92aa0335e792",
+		"name": "Readers API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Reader",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\t\"id\": 0,\n\t\"gender\":\"M\",\n    \"familyname\":\"LE\" ,\n    \"firstname\":\"BIMO18\" ,\n    \"birthDate\":null,\n    \"address\":null                \n\t\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8002/api/readers",
+					"host": [
+						"localhost"
+					],
+					"port": "8002",
+					"path": [
+						"api",
+						"readers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8002/api/readers/3",
+					"host": [
+						"localhost"
+					],
+					"port": "8002",
+					"path": [
+						"api",
+						"readers",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Reader",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\t\"id\": 3,\n\t\"gender\":\"F\",\n    \"familyname\":\"Ferroudja\" ,\n    \"firstname\":\"BIMO18\" ,\n    \"birthDate\":null,\n    \"address\":null                \n\t\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8002/api/readers",
+					"host": [
+						"localhost"
+					],
+					"port": "8002",
+					"path": [
+						"api",
+						"readers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Reader",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
