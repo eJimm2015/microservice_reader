@@ -91,4 +91,24 @@ public class Reader {
         return Objects.hash(id);
     }
 
+    @Override
+    public String toString() {
+        return "Reader{" +
+                "id=" + id +
+                ", gender=" + gender +
+                ", familyName='" + familyName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", birthDate=" + birthDate +
+                ", address='" + address + '\'' +
+                '}';
+    }
+
+    public Reader update(Reader reader) {
+        if(Objects.nonNull(reader.gender)) this.gender = reader.gender;
+        if(Objects.nonNull(reader.familyName)) this.familyName = reader.familyName;
+        if(Objects.nonNull(reader.firstName)) this.firstName = reader.firstName;
+        if(Objects.nonNull(reader.address)) this.address = reader.address;
+        if(Objects.nonNull(reader.birthDate)) this.birthDate = reader.birthDate;
+        return this;
+    }
 }

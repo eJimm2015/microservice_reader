@@ -25,4 +25,16 @@ public class ReaderServiceProviderImpl implements ReaderServiceProvider {
         if (byId.isPresent()) return byId.get();
         throw new NoSuchElementException(String.format("Le lecteur n°%s n'existe pas",id));
     }
+
+    @Override
+    public Reader update(Reader reader) {
+        Optional<Reader> byId = readerRepository.findById(reader.getId());
+        if(byId.isPresent())return readerRepository.save(byId.get().update(reader));
+        throw new NoSuchElementException(String.format("Le lecteur n°%s n'existe pas", reader.getId()));
+    }
+
+    @Override
+    public void delete(Reader reader) {
+        readerRepository.delete(reader);
+    }
 }

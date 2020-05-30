@@ -2,20 +2,22 @@ package fr.dauphine.microservice.reader.api;
 
 import fr.dauphine.microservice.reader.dto.ReaderDto;
 import fr.dauphine.microservice.reader.model.Reader;
-import fr.dauphine.microservice.reader.service.ReaderServiceProvider;
 import fr.dauphine.microservice.reader.service.impl.ReaderServiceProviderImpl;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.NoSuchElementException;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ReaderApiTest {
@@ -29,10 +31,10 @@ public class ReaderApiTest {
     @Test
     public void testCreation() {
         Reader reader = new Reader();
-        Mockito.when(readerServiceProvider.create(reader)).thenReturn(reader.setId(12345));
+        when(readerServiceProvider.create(reader)).thenReturn(reader.setId(12345));
         ResponseEntity<EntityModel<ReaderDto>> entityModelResponseEntity = readerApi.create(reader);
         EntityModel<ReaderDto> body = entityModelResponseEntity.getBody();
-        Assert.assertNotNull(body);
+        assertNotNull(body);
         ReaderDto content = body.getContent();
         Assert.assertEquals(new ReaderDto().fill(reader.setId(12345)),content);
     }
@@ -40,18 +42,39 @@ public class ReaderApiTest {
     @Test
     public void testGetById() {
         Reader reader = new Reader().setId(12345);
-        Mockito.when(readerServiceProvider.getById(12345)).thenReturn(reader);
+        when(readerServiceProvider.getById(12345)).thenReturn(reader);
         ResponseEntity<EntityModel<ReaderDto>> entityModelResponseEntity= readerApi.getById(12345);
         EntityModel<ReaderDto> body = entityModelResponseEntity.getBody();
-        Assert.assertNotNull(body);
+        assertNotNull(body);
         ReaderDto content = body.getContent();
         Assert.assertEquals(new ReaderDto().fill(reader),content);
     }
 
     @Test(expected = ResponseStatusException.class)
-    public  void testGetByUnknownId(){
-        Mockito.when(readerServiceProvider.getById(12345)).thenThrow(new NoSuchElementException());
+    public void testGetByUnknownId(){
+        when(readerServiceProvider.getById(12345)).thenThrow(new NoSuchElementException());
         readerApi.getById(12345);
 
     }
+
+    @Test
+    public void testUpdate() {
+        Reader reader = new Reader().setId(1).setFamilyName("Nietzsche");
+        when(readerServiceProvider.update(reader)).thenReturn(reader.setFamilyName("Stirner"));
+        reader.setFamilyName("Stirner");
+        ResponseEntity<EntityModel<ReaderDto>> update = readerApi.update(reader);
+        EntityModel<ReaderDto> body = update.getBody();
+        assertNotNull(body);
+        ReaderDto content = body.getContent();
+        assertEquals(new ReaderDto().fill(reader), content);
+    }
+
+    @Test
+    public void testDelete() {
+        Reader reader = new Reader().setId(1);
+        doNothing().when(readerServiceProvider).delete(reader);
+        readerApi.delete(1);
+        verify(readerServiceProvider, times(1)).delete(reader);
+    }
+
 }

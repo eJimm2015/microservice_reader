@@ -41,6 +41,22 @@ public class ReaderApi {
        }
     }
 
+    @PutMapping
+    public ResponseEntity<EntityModel<ReaderDto>> update(@RequestBody Reader reader) {
+        try {
+            Reader updated = readerServiceProvider.update(reader);
+            return ResponseEntity.ok().body(EntityModel.of(new ReaderDto().fill(updated), getLink(updated.getId())));
+        } catch (NoSuchElementException e) {
+            throw new ResponseStatusException(NOT_FOUND,e.getMessage());
+        }
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        readerServiceProvider.delete(new Reader().setId(id));
+        return ResponseEntity.ok().build();
+    }
+
     private Link getLink(Integer id) {
         return linkTo(methodOn(ReaderApi.class)
                 .getById(id)).withSelfRel();

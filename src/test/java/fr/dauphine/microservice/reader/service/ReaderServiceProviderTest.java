@@ -9,11 +9,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
-
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ReaderServiceProviderTest {
@@ -46,4 +48,20 @@ public class ReaderServiceProviderTest {
         readerServiceProvider.getById(id);
     }
 
+    @Test
+    public void testUpdateReader() {
+        Reader reader = new Reader().setId(1).setFirstName("Friedrich");
+        when(readerRepository.findById(reader.getId())).thenReturn(Optional.of(reader));
+        when(readerRepository.save(reader)).thenReturn(reader.setFirstName("Emil"));
+        reader.setFirstName("Emil");
+        assertEquals(reader, readerServiceProvider.update(reader));
+    }
+
+    @Test
+    public void testDeleteReader() {
+        Reader reader = new Reader().setId(1);
+        doNothing().when(readerRepository).delete(reader);
+        readerServiceProvider.delete(reader);
+        verify(readerRepository, times(1)).delete(reader);
+    }
 }
