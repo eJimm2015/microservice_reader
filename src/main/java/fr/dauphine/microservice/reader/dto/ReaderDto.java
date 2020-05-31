@@ -5,6 +5,7 @@ import fr.dauphine.microservice.reader.model.Reader;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.Id;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -16,7 +17,7 @@ public class ReaderDto extends RepresentationModel<ReaderDto> {
 
     private String familyName;
     private String firstName;
-    private Date birthDate;
+    private LocalDate birthDate;
     private String address;
 
     public Integer getId() {
@@ -55,11 +56,11 @@ public class ReaderDto extends RepresentationModel<ReaderDto> {
         return this;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public ReaderDto setBirthDate(Date birthDate) {
+    public ReaderDto setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
         return this;
     }

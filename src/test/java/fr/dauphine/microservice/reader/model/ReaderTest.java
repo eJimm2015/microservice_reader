@@ -3,6 +3,7 @@ package fr.dauphine.microservice.reader.model;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
@@ -31,7 +32,7 @@ public class ReaderTest {
 
     @Test
     public void testBirthDateSetterAndGetter() {
-        Date d  = new Date();
+        LocalDate d = LocalDate.now();
         reader.setBirthDate(d);
         assertEquals(d, reader.getBirthDate());
     }

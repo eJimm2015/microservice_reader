@@ -1,14 +1,13 @@
 package fr.dauphine.microservice.reader.model;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
-
-import net.bytebuddy.dynamic.loading.InjectionClassLoader;
-import org.springframework.hateoas.RepresentationModel;
 
 @Entity
 public class Reader {
@@ -21,7 +20,9 @@ public class Reader {
 
     private String familyName;
     private String firstName;
-    private Date birthDate;
+
+    @ApiModelProperty(value = "YYYY-MM-DD",example = "YYYY-MM-DD")
+    private LocalDate birthDate;
     private String address;
 
     public Integer getId() {
@@ -60,11 +61,11 @@ public class Reader {
         return this;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public Reader setBirthDate(Date birthDate) {
+    public Reader setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
         return this;
     }

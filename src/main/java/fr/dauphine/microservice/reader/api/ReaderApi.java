@@ -3,6 +3,8 @@ package fr.dauphine.microservice.reader.api;
 import fr.dauphine.microservice.reader.dto.ReaderDto;
 import fr.dauphine.microservice.reader.model.Reader;
 import fr.dauphine.microservice.reader.service.ReaderServiceProvider;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
@@ -18,12 +20,14 @@ import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/readers")
+@Api(value = "Reader API")
 public class ReaderApi {
 
     @Autowired
     private ReaderServiceProvider readerServiceProvider;
 
     @PostMapping
+    @ApiOperation("Create Reader")
     public ResponseEntity<EntityModel<ReaderDto>> create(@RequestBody Reader reader) {
         Reader created = readerServiceProvider.create(reader);
         Link link = getLink(created.getId());
@@ -31,6 +35,7 @@ public class ReaderApi {
     }
 
     @GetMapping("{id}")
+    @ApiOperation("Get Reader by ID")
     public ResponseEntity<EntityModel<ReaderDto>> getById(@PathVariable("id") Integer id) {
        try {
            Reader reader = readerServiceProvider.getById(id);
@@ -42,6 +47,7 @@ public class ReaderApi {
     }
 
     @PutMapping
+    @ApiOperation("Update Reader")
     public ResponseEntity<EntityModel<ReaderDto>> update(@RequestBody Reader reader) {
         try {
             Reader updated = readerServiceProvider.update(reader);
@@ -52,6 +58,7 @@ public class ReaderApi {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Delete Reader")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         readerServiceProvider.delete(new Reader().setId(id));
         return ResponseEntity.ok().build();
