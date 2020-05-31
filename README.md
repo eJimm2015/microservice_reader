@@ -9,4 +9,4 @@ Afin de lancer le microservice
 Quelques détails
 - Les dates sont au format YYYY-MM-DD
 - L'ID est autogénéré lors de la création. Il ne faut donc pas le renseigner.
-- Lors de la mise à jour, seuls les attributs mis à jour auront une nouvelle valeur, le reste seront à null (ou à 0 si c'est une valeur numérique)
+- Lors de la mise à jour, les attributs qui ne changent pas seront à null (ou à 0 si c'est une valeur numérique).
