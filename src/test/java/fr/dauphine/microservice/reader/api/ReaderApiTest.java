@@ -1,6 +1,7 @@
 package fr.dauphine.microservice.reader.api;
 
 import fr.dauphine.microservice.reader.dto.ReaderDto;
+import fr.dauphine.microservice.reader.model.ClientReader;
 import fr.dauphine.microservice.reader.model.Reader;
 import fr.dauphine.microservice.reader.service.impl.ReaderServiceProviderImpl;
 import org.junit.Assert;
@@ -30,9 +31,10 @@ public class ReaderApiTest {
 
     @Test
     public void testCreation() {
+        ClientReader clientReader = new ClientReader();
         Reader reader = new Reader();
-        when(readerServiceProvider.create(reader)).thenReturn(reader.setId(12345));
-        ResponseEntity<EntityModel<ReaderDto>> entityModelResponseEntity = readerApi.create(reader);
+        when(readerServiceProvider.create(any())).thenReturn(reader.setId(12345));
+        ResponseEntity<EntityModel<ReaderDto>> entityModelResponseEntity = readerApi.create(clientReader);
         EntityModel<ReaderDto> body = entityModelResponseEntity.getBody();
         assertNotNull(body);
         ReaderDto content = body.getContent();

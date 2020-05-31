@@ -1,7 +1,5 @@
 package fr.dauphine.microservice.reader.model;
 
-import io.swagger.annotations.ApiModelProperty;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,8 +18,6 @@ public class Reader {
 
     private String familyName;
     private String firstName;
-
-    @ApiModelProperty(value = "YYYY-MM-DD",example = "YYYY-MM-DD")
     private LocalDate birthDate;
     private String address;
 

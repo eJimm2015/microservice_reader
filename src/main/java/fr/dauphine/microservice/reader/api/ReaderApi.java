@@ -1,6 +1,7 @@
 package fr.dauphine.microservice.reader.api;
 
 import fr.dauphine.microservice.reader.dto.ReaderDto;
+import fr.dauphine.microservice.reader.model.ClientReader;
 import fr.dauphine.microservice.reader.model.Reader;
 import fr.dauphine.microservice.reader.service.ReaderServiceProvider;
 import io.swagger.annotations.Api;
@@ -28,8 +29,8 @@ public class ReaderApi {
 
     @PostMapping
     @ApiOperation("Create Reader")
-    public ResponseEntity<EntityModel<ReaderDto>> create(@RequestBody Reader reader) {
-        Reader created = readerServiceProvider.create(reader);
+    public ResponseEntity<EntityModel<ReaderDto>> create(@RequestBody ClientReader clientReader) {
+        Reader created = readerServiceProvider.create(clientReader.toReader());
         Link link = getLink(created.getId());
         return new ResponseEntity<>(EntityModel.of(new ReaderDto().fill(created), link), CREATED);
     }
